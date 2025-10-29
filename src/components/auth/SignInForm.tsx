@@ -6,7 +6,8 @@ import Button from "@/components/ui/button/Button";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
 import React, { useState, FormEvent } from "react"; // NUEVO: Importar FormEvent
-import { useRouter } from 'next/navigation'; // NUEVO: Para redirigir
+// import { useRouter } from 'next/navigation'; // NUEVO: Para redirigir // NUEVO: SE ELIMINA
+import { useAuth } from '@/context/AuthContext'; // <-- AÑADE ESTA IMPORTACIÓN
 
 export default function SignInForm() {
   // --- NUEVO: Estados para el formulario ---
@@ -16,7 +17,8 @@ export default function SignInForm() {
   const [isChecked, setIsChecked] = useState(false); // Para "Keep me logged in"
   const [error, setError] = useState<string | null>(null); // Para mostrar errores
   const [isLoading, setIsLoading] = useState(false); // Para mostrar estado de carga
-  const router = useRouter(); // NUEVO: Hook para redirigir
+  // const router = useRouter(); // NUEVO: Hook para redirigir // NUEVO: SE ELIMINA
+  const { login } = useAuth(); // <-- Obtenemos la función login del contexto
   // --- FIN DE NUEVOS ESTADOS ---
 
   // --- NUEVO: Función para manejar el envío del formulario ---
@@ -47,12 +49,13 @@ export default function SignInForm() {
 
       // ¡Éxito! Guardamos el token
       console.log('Login exitoso:', data);
-      // Guardar el token (ej. en localStorage)
-      localStorage.setItem('adminToken', data.token);
-      localStorage.setItem('adminUser', JSON.stringify(data.admin)); // Guardamos info del admin
+      login(data.token, data.admin); // <-- Usamos la función login del contexto
+      // // Guardar el token (ej. en localStorage)
+      // localStorage.setItem('adminToken', data.token);
+      // localStorage.setItem('adminUser', JSON.stringify(data.admin)); // Guardamos info del admin
 
-      // Redirigir al dashboard (página principal '/')
-      router.push('/');
+      // // Redirigir al dashboard (página principal '/')
+      // router.push('/');
 
     } catch (err) {
       if (err instanceof Error) {
