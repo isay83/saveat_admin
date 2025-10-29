@@ -5,11 +5,69 @@ import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react"; // NUEVO: Importar FormEvent
+import { useRouter } from 'next/navigation'; // NUEVO: Para redirigir
 
 export default function SignInForm() {
+  // --- NUEVO: Estados para el formulario ---
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false); // Para "Keep me logged in"
+  const [error, setError] = useState<string | null>(null); // Para mostrar errores
+  const [isLoading, setIsLoading] = useState(false); // Para mostrar estado de carga
+  const router = useRouter(); // NUEVO: Hook para redirigir
+  // --- FIN DE NUEVOS ESTADOS ---
+
+  // --- NUEVO: Función para manejar el envío del formulario ---
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevenir recarga de página
+    setIsLoading(true);
+    setError(null);
+
+    // Definimos la URL de tu API (Asegúrate que tu backend esté corriendo)
+    // En un proyecto real, esto vendría de una variable de entorno (.env.local)
+    const apiUrl = 'http://localhost:5000/api/v1/admins/login';
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Si la API devuelve un error (ej. 401 Unauthorized)
+        throw new Error(data.message || 'Error al iniciar sesión');
+      }
+
+      // ¡Éxito! Guardamos el token
+      console.log('Login exitoso:', data);
+      // Guardar el token (ej. en localStorage)
+      localStorage.setItem('adminToken', data.token);
+      localStorage.setItem('adminUser', JSON.stringify(data.admin)); // Guardamos info del admin
+
+      // Redirigir al dashboard (página principal '/')
+      router.push('/');
+
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Ocurrió un error inesperado.');
+      }
+      console.error('Error en login:', err);
+    } finally {
+      setIsLoading(false); // Quitar estado de carga
+    }
+  };
+  // --- FIN DE LA FUNCIÓN HANDLESUBMIT ---
+
+
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="w-full max-w-md sm:pt-10 mx-auto mb-5">
@@ -84,22 +142,38 @@ export default function SignInForm() {
                 </span>
               </div>
             </div>
-            <form>
+            {/* --- NUEVO: AÑADIR onSubmit AL FORMULARIO --- */}
+            <form onSubmit={handleSubmit}>
               <div className="space-y-6">
                 <div>
-                  <Label>
+                  <Label htmlFor="email"> {/* NUEVO: Añadir htmlFor */}
                     Email <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="info@gmail.com" type="email" />
+                  {/* NUEVO: Conectar Input al estado */}
+                  <Input
+                    id="email" // NUEVO: Añadir id
+                    placeholder="info@gmail.com"
+                    type="email"
+                    value={email} // NUEVO: Valor del estado
+                    onChange={(e) => setEmail(e.target.value)} // NUEVO: Actualizar estado
+                    disabled={isLoading} // NUEVO: Deshabilitar mientras carga
+                    error={!!error} // NUEVO: Mostrar error si existe
+                  />
                 </div>
                 <div>
-                  <Label>
+                  <Label htmlFor="password"> {/* NUEVO: Añadir htmlFor */}
                     Password <span className="text-error-500">*</span>{" "}
                   </Label>
                   <div className="relative">
+                    {/* NUEVO: Conectar Input al estado */}
                     <Input
+                      id="password" // NUEVO: Añadir id
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      value={password} // NUEVO: Valor del estado
+                      onChange={(e) => setPassword(e.target.value)} // NUEVO: Actualizar estado
+                      disabled={isLoading} // NUEVO: Deshabilitar mientras carga
+                      error={!!error} // NUEVO: Mostrar error si existe
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
@@ -113,6 +187,7 @@ export default function SignInForm() {
                     </span>
                   </div>
                 </div>
+                {/* --- Checkbox y Forgot Password (SIN CAMBIOS) --- */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Checkbox checked={isChecked} onChange={setIsChecked} />
@@ -127,14 +202,26 @@ export default function SignInForm() {
                     Forgot password?
                   </Link>
                 </div>
+                {/* --- NUEVO: Mostrar mensaje de error --- */}
+                {error && (
+                  <div className="text-sm text-center text-error-500">
+                    {error}
+                  </div>
+                )}
                 <div>
-                  <Button className="w-full" size="sm">
-                    Sign in
+                  {/* NUEVO: Cambiar a type="submit" y manejar estado de carga */}
+                  <Button
+                    type="submit" // NUEVO: Tipo submit
+                    className="w-full"
+                    size="sm"
+                    disabled={isLoading} // NUEVO: Deshabilitar mientras carga
+                  >
+                    {isLoading ? 'Signing in...' : 'Sign in'} {/* NUEVO: Texto dinámico */}
                   </Button>
                 </div>
               </div>
             </form>
-
+            {/* --- Link a SignUp (SIN CAMBIOS) --- */}
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Don&apos;t have an account? {""}
