@@ -32,7 +32,7 @@ const initialFormData = {
   unit: 'piezas',
   price: 0,
   donor_id: '',
-  status: 'borrador',
+  status: 'borrador' as IProduct['status'], // <-- 2. AÑADIDO CAST DE TIPO
   expiry_date: '',
   pickup_window_hours: 24,
   description: '',
@@ -107,26 +107,31 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
   }, [isOpen, product, isEditMode]);
 
   // Manejadores de cambios en el formulario
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
+    let finalValue: string | number = value;
     // Si es un campo numérico, tenemos que manejar el caso de string vacío
     if (type === 'number') {
-      // Si el campo está vacío, guardamos 0 (o puedes usar null si prefieres)
-      // Si no está vacío, lo convertimos a número.
-      const numericValue = value === '' ? 0 : parseFloat(value);
-      
-      setFormData(prev => ({
-        ...prev,
-        [name]: numericValue,
+      // Si el campo está vacío, guarda 0.
+      const numericValue = parseFloat(value);
+      // Si el parseo da NaN (ej. "abc"), vuelve a 0.
+      finalValue = isNaN(numericValue) ? 0 : numericValue;
+    } 
 
-      }));
-    } else {
-      // Si es un campo de texto, lo guardamos tal cual
-      setFormData(prev => ({
+    setFormData(prev => {
+      const newFormData = {
         ...prev,
-        [name]: value,
-      }));
-    }
+        [name]: finalValue,
+      };
+
+      // Sincroniza 'quantity_total_received' con 'quantity_available'
+      // SOLO cuando estamos en modo "Crear".
+      if (!isEditMode && name === 'quantity_available') {
+        newFormData.quantity_total_received = finalValue as number;
+      }
+      
+      return newFormData;
+    });
     // --- FIN DE LA SOLUCIÓN 
   };
 
@@ -361,7 +366,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
                 <Image
                     width={64}
                     height={64}
-                    src={previewImage || "https://placehold.co/64x64/EAD5C9/000?text=Img"}
+                    src={previewImage || "/images/product/upload.png"} // Fallback
                     alt="Preview"
                     className="object-cover w-16 h-16 rounded-md border border-gray-200 dark:border-gray-700"
                 />
