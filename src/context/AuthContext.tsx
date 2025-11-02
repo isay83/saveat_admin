@@ -3,6 +3,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
+interface ISocialMedia {
+  facebook?: string;
+  x?: string;
+  linkedin?: string;
+  instagram?: string;
+}
+
 // Definimos la forma del objeto de usuario que guardamos
 interface AdminUser {
   id: string;
@@ -11,6 +18,14 @@ interface AdminUser {
   email: string;
   role: 'admin' | 'gestor';
   profile_picture_url?: string;
+  // --- AÑADE CAMPOS NUEVOS ---
+  phone?: string;
+  employeeId?: string;
+  country?: string;
+  city?: string;
+  postalCode?: string;
+  socialMedia?: ISocialMedia;
+  // --- FIN DE CAMPOS NUEVOS ---
 }
 
 // Definimos la forma del contexto
