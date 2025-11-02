@@ -1,4 +1,4 @@
-# Saveat Admin Admin Dashboard
+# Saveat Admin Dashboard
 
 Saveat Admin is designed to manage the entire administrative process behind our organization, which gives food a second chance to avoid waste. It provides statistics obtained through its own use and externally through the analysis of unstructured data on the internet.
 
