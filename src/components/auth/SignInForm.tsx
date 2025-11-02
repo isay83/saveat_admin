@@ -37,7 +37,7 @@ export default function SignInForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, rememberMe: isChecked }),
       });
 
       const data = await response.json();
@@ -49,13 +49,7 @@ export default function SignInForm() {
 
       // ¡Éxito! Guardamos el token
       console.log('Login exitoso:', data);
-      login(data.token, data.admin); // <-- Usamos la función login del contexto
-      // // Guardar el token (ej. en localStorage)
-      // localStorage.setItem('adminToken', data.token);
-      // localStorage.setItem('adminUser', JSON.stringify(data.admin)); // Guardamos info del admin
-
-      // // Redirigir al dashboard (página principal '/')
-      // router.push('/');
+      login(data.token, data.admin, isChecked); // <-- Usamos la función login del contexto
 
     } catch (err) {
       if (err instanceof Error) {

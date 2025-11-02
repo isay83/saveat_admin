@@ -79,7 +79,7 @@ export default function UserMetaCard() {
     cloudinaryFormData.append('file', file);
     cloudinaryFormData.append('upload_preset', 'saveat_preset_cloudinary'); // <-- REEMPLAZA CON TU UPLOAD PRESET
     // Esto le dice a Cloudinary que guarde la imagen en esa carpeta
-    cloudinaryFormData.append('folder', 'saveat_folder_cloudinary');
+    cloudinaryFormData.append('folder', 'saveat_folder_profile');
 
     try {
       const response = await axios.post(

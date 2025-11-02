@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["res.cloudinary.com"],
+    domains: ["res.cloudinary.com", "placehold.co", "i5-mx.walmartimages.com", "www.cityclub.com.mx"],
   },
   webpack(config) {
     config.module.rules.push({

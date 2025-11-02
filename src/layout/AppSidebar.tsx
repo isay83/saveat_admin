@@ -16,6 +16,7 @@ import {
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  BoxIcon, // AÑADIDO
 } from "../icons/index";
 import SidebarWidget from "./SidebarWidget";
 
@@ -32,6 +33,13 @@ const navItems: NavItem[] = [
     name: "Dashboard",
     subItems: [{ name: "Ecommerce", path: "/", pro: false }],
   },
+  // --- AÑADIR ESTE NUEVO OBJETO ---
+  {
+    icon: <BoxIcon className="w-5 h-5" />, // Usamos el icono de caja
+    name: "Inventario",
+    path: "/inventory", // La ruta que acabamos de crear
+  },
+  // --- FIN DEL NUEVO OBJETO ---
   {
     icon: <CalenderIcon />,
     name: "Calendar",

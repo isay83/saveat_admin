@@ -1,25 +1,24 @@
 import React from "react";
 
-interface TextareaProps {
-  placeholder?: string; // Placeholder text
-  rows?: number; // Number of rows
-  value?: string; // Current value
-  onChange?: (value: string) => void; // Change handler
-  className?: string; // Additional CSS classes
-  disabled?: boolean; // Disabled state
-  error?: boolean; // Error state
-  hint?: string; // Hint text to display
+interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+  // Mantenemos las props personalizadas
+  error?: boolean;
+  hint?: string;
+  // Definimos onChange como una función que recibe un string
+  onChange?: (value: string) => void;
 }
 
 const TextArea: React.FC<TextareaProps> = ({
-  placeholder = "Enter your message", // Default placeholder
-  rows = 3, // Default number of rows
-  value = "", // Default value
-  onChange, // Callback for changes
-  className = "", // Additional custom styles
-  disabled = false, // Disabled state
-  error = false, // Error state
-  hint = "", // Default hint text
+  className = '',
+  disabled = false,
+  error = false,
+  hint = '',
+  placeholder = 'Enter your message',
+  rows = 3,
+  value = '',
+  onChange, // Capturamos el onChange personalizado
+  // Capturamos el resto de props (id, name, value, etc.)
+  ...rest
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (onChange) {
@@ -46,6 +45,7 @@ const TextArea: React.FC<TextareaProps> = ({
         onChange={handleChange}
         disabled={disabled}
         className={textareaClasses}
+        {...rest} // <-- ¡Esto añade id, name, value, etc.!
       />
       {hint && (
         <p

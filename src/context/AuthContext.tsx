@@ -33,7 +33,7 @@ interface AuthContextType {
   token: string | null;
   user: AdminUser | null;
   isLoading: boolean; // Para saber si aún estamos cargando la info inicial
-  login: (token: string, user: AdminUser) => void;
+  login: (token: string, user: AdminUser, rememberMe: boolean) => void;
   logout: () => void;
   updateUser: (updatedUserData: Partial<AdminUser>) => void; // Para actualizar perfil
 }
@@ -49,30 +49,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   // const pathname = usePathname(); // Para saber en qué ruta estamos
 
-  // Efecto para cargar el estado inicial desde localStorage
+  // Efecto para cargar el estado inicial desde localStorage y sessionStorage
   useEffect(() => {
     try {
-      const storedToken = localStorage.getItem('adminToken');
-      const storedUser = localStorage.getItem('adminUser');
+      let storedToken = localStorage.getItem('adminToken');
+      let storedUser = localStorage.getItem('adminUser');
+
+      if (!storedToken) {
+        // Si no está en localStorage, revisa sessionStorage (sesión temporal)
+        storedToken = sessionStorage.getItem('adminToken');
+        storedUser = sessionStorage.getItem('adminUser');
+      }
 
       if (storedToken && storedUser) {
         setToken(storedToken);
         setUser(JSON.parse(storedUser));
       }
     } catch (error) {
-      console.error("Error loading auth state from localStorage:", error);
+      console.error("Error loading auth state:", error);
       // Limpiar localStorage si hay error al parsear
       localStorage.removeItem('adminToken');
       localStorage.removeItem('adminUser');
+      sessionStorage.removeItem('adminToken');
+      sessionStorage.removeItem('adminUser');
     } finally {
       setIsLoading(false); // Terminamos de cargar
     }
   }, []); // Se ejecuta solo una vez al montar
 
-  const login = useCallback((newToken: string, newUser: AdminUser) => {
+  const login = useCallback((newToken: string, newUser: AdminUser, rememberMe: boolean) => {
+    // Elige dónde guardar basado en el checkbox
+    const storage = rememberMe ? localStorage : sessionStorage;
+
     try {
-      localStorage.setItem('adminToken', newToken);
-      localStorage.setItem('adminUser', JSON.stringify(newUser));
+      storage.setItem('adminToken', newToken);
+      storage.setItem('adminUser', JSON.stringify(newUser));
       setToken(newToken);
       setUser(newUser);
       router.push('/'); // Redirige al dashboard después del login
@@ -85,6 +96,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       localStorage.removeItem('adminToken');
       localStorage.removeItem('adminUser');
+      sessionStorage.removeItem('adminToken');
+      sessionStorage.removeItem('adminUser');
       setToken(null);
       setUser(null);
       router.push('/signin'); // Redirige al login después del logout
@@ -98,7 +111,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
        if (!prevUser) return null;
        const newUser = { ...prevUser, ...updatedUserData };
        try {
-        localStorage.setItem('adminUser', JSON.stringify(newUser));
+        // Revisa cuál storage está en uso (primero el persistente)
+        if (localStorage.getItem('adminToken')) {
+          localStorage.setItem('adminUser', JSON.stringify(newUser));
+        } else if (sessionStorage.getItem('adminToken')) {
+          sessionStorage.setItem('adminUser', JSON.stringify(newUser));
+        }
        } catch (error) {
          console.error("Error updating user in localStorage:", error);
        }
