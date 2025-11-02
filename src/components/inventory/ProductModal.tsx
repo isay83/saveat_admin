@@ -28,6 +28,7 @@ const initialFormData = {
   brand: '',
   category: '',
   quantity_available: 0,
+  quantity_total_received: 0,
   unit: 'piezas',
   price: 0,
   donor_id: '',
@@ -80,6 +81,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
           brand: product.brand || '',
           category: product.category || '',
           quantity_available: product.quantity_available,
+          quantity_total_received: product.quantity_total_received,
           unit: product.unit,
           price: product.price,
           donor_id: product.donor_id,
@@ -106,11 +108,26 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
 
   // Manejadores de cambios en el formulario
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: (e.target.type === 'number' || e.target.type === 'range') ? parseFloat(value) : value,
-    }));
+    const { name, value, type } = e.target;
+    // Si es un campo numérico, tenemos que manejar el caso de string vacío
+    if (type === 'number') {
+      // Si el campo está vacío, guardamos 0 (o puedes usar null si prefieres)
+      // Si no está vacío, lo convertimos a número.
+      const numericValue = value === '' ? 0 : parseFloat(value);
+      
+      setFormData(prev => ({
+        ...prev,
+        [name]: numericValue,
+
+      }));
+    } else {
+      // Si es un campo de texto, lo guardamos tal cual
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+    // --- FIN DE LA SOLUCIÓN 
   };
 
   // --- NUEVA FUNCIÓN: Un manejador para los <Select> y <TextArea> ---
@@ -161,8 +178,21 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
     setIsSaving(true);
     setError(null);
 
+    // --- Validación del Frontend ---
+    if (formData.donor_id === '') {
+      setError('Por favor, selecciona un donante.');
+      setIsSaving(false);
+      return;
+    }
+    if (formData.expiry_date === '') {
+      setError('Por favor, selecciona una fecha de caducidad.');
+      setIsSaving(false);
+      return;
+    }
+    // --- Fin de la Validación ---
+
     try {
-      let imageUrl = product?.image_url || ''; // Empezamos con la imagen existente (si hay)
+      let imageUrl = formData.image_url || ''; // Usamos la URL del estado
 
       // 1. Si se seleccionó un nuevo archivo, subirlo
       if (selectedFile) {
@@ -173,7 +203,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
       const finalData = { ...formData, image_url: imageUrl };
 
       // 3. Decidir si llamar a POST (Crear) o PUT (Editar)
-      if (isEditMode) {
+      if (isEditMode && product) {
         // Modo Editar
         await apiService.put(`/products/${product._id}`, finalData);
       } else {
