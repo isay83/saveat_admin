@@ -176,7 +176,7 @@ export default function UserMetaCard() {
     return <div>Cargando perfil...</div>; // O un spinner
   }
 
-  const profileImageUrl = selectedFile ? formData.profile_picture_url : user.profile_picture_url || "/images/user/owner.jpg";
+  const profileImageUrl = selectedFile ? formData.profile_picture_url : user.profile_picture_url || "/images/user/user.png";
 
 
   return (

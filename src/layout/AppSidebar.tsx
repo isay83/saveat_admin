@@ -10,7 +10,7 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  // ListIcon,
+  ListIcon,
   PageIcon,
   // PieChartIcon,
   PlugInIcon,
@@ -44,6 +44,11 @@ const navItems: NavItem[] = [
     icon: <GroupIcon className="w-5 h-5" />, // Icono para "Donantes"
     name: "Donors",
     path: "/donors", // La nueva ruta que vamos a crear
+  },
+  {
+    icon: <ListIcon className="w-5 h-5" />,
+    name: "Reservations",
+    path: "/reservations",
   },
   // --- FIN DEL NUEVO OBJETO ---
   // {
