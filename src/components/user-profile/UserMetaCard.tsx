@@ -190,7 +190,7 @@ export default function UserMetaCard() {
                 <Image
                     width={80}
                     height={80}
-                    src={profileImageUrl} // Usa la URL del contexto o la default
+                    src={profileImageUrl || "/images/user/user.png"} // Usa la URL del contexto o la default
                     alt="user"
                     className="object-cover w-full h-full overflow-hidden border border-gray-200 rounded-full dark:border-gray-800"
                     // Añadir un onError para fallback si la URL falla
@@ -198,7 +198,7 @@ export default function UserMetaCard() {
                         // Si falla la carga, muestra la imagen por defecto
                         const target = e.target as HTMLImageElement;
                         target.onerror = null; // Previene bucles infinitos
-                        target.src = "/images/user/owner.jpg";
+                        target.src = "/images/user/user.png";
                     }}
                 />
                  {/* Botón flotante para editar imagen */}
@@ -309,19 +309,19 @@ export default function UserMetaCard() {
                     <Image
                         width={64}
                         height={64}
-                        src={formData.profile_picture_url || "/images/user/owner.jpg"} // Muestra previsualización o actual
+                        src={formData.profile_picture_url || "/images/user/user.png"} // Muestra previsualización o actual
                         alt="Preview"
                         className="object-cover w-16 h-16 rounded-full border border-gray-200 dark:border-gray-700"
                         onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.onerror = null;
-                            target.src = "/images/user/owner.jpg";
+                            target.src = "/images/user/user.png";
                         }}
                     />
                     <input
                         id="profilePictureInput"
                         type="file"
-                        accept="image/png, image/jpeg, image/webp"
+                        accept="image/png, image/jpeg, image/jpg, image/webp"
                         onChange={handleFileChange}
                         className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 dark:file:bg-brand-500/10 dark:file:text-brand-400 dark:hover:file:bg-brand-500/20"
                     />
