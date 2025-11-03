@@ -17,6 +17,7 @@ import {
   TableIcon,
   UserCircleIcon,
   BoxIcon, // AÑADIDO
+  GroupIcon // AÑADIDO
 } from "../icons/index";
 // import SidebarWidget from "./SidebarWidget";
 
@@ -38,6 +39,11 @@ const navItems: NavItem[] = [
     icon: <BoxIcon className="w-5 h-5" />, // Usamos el icono de caja
     name: "Inventario",
     path: "/inventory", // La ruta que acabamos de crear
+  },
+  {
+    icon: <GroupIcon className="w-5 h-5" />, // Icono para "Donantes"
+    name: "Donantes",
+    path: "/donors", // La nueva ruta que vamos a crear
   },
   // --- FIN DEL NUEVO OBJETO ---
   {
