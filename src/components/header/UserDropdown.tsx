@@ -1,12 +1,16 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
+import { useAuth } from "@/context/AuthContext"; // <-- IMPORTAR EL HOOK DE AUTENTICACIÓN
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+
+  // --- OBTENER EL USUARIO Y LA FUNCIÓN DE LOGOUT ---
+  const { user, logout, isLoading } = useAuth();
+  // --- FIN DEL CAMBIO ---
 
 function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
   e.stopPropagation();
@@ -16,6 +20,20 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
   function closeDropdown() {
     setIsOpen(false);
   }
+
+  // Mientras carga el estado de auth o si no hay usuario, no mostramos nada
+  if (isLoading || !user) {
+    return (
+      <div className="relative">
+        {/* Placeholder o spinner mientras carga */}
+        <div className="flex items-center">
+          <span className="mr-3 overflow-hidden rounded-full h-11 w-11 bg-gray-200 dark:bg-gray-700 animate-pulse"></span>
+          <span className="block mr-1 font-medium text-theme-sm h-4 w-20 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-md"></span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
       <button
@@ -26,12 +44,23 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
           <Image
             width={44}
             height={44}
-            src="/images/user/owner.jpg"
+            // Usar la foto de perfil del usuario, con fallback a la de por defecto
+            src={user.profile_picture_url || "/images/user/user.png"}
             alt="User"
+            className="object-cover w-full h-full"
+            // Añadir onError para el caso de que la URL de Cloudinary falle
+            onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null; // Previene bucles infinitos
+                target.src = "/images/user/user.png";
+            }}
           />
         </span>
 
-        <span className="block mr-1 font-medium text-theme-sm">Musharof</span>
+        {/* Usar el primer nombre del usuario */}
+        <span className="block mr-1 font-medium text-theme-sm capitalize">
+          {user.first_name}
+        </span>
 
         <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
@@ -59,11 +88,12 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         className="absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
       >
         <div>
-          <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-            Musharof Chowdhury
+          {/* Usar el nombre completo y email del usuario */}
+          <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400 capitalize">
+            {user.first_name} {user.last_name}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-            randomuser@pimjo.com
+            {user.email}
           </span>
         </div>
 
@@ -97,7 +127,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
             <DropdownItem
               onItemClick={closeDropdown}
               tag="a"
-              href="/profile"
+              href="#"
               className="flex items-center gap-3 px-3 py-2 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
             >
               <svg
@@ -122,7 +152,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
             <DropdownItem
               onItemClick={closeDropdown}
               tag="a"
-              href="/profile"
+              href="#"
               className="flex items-center gap-3 px-3 py-2 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
             >
               <svg
@@ -144,8 +174,10 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
             </DropdownItem>
           </li>
         </ul>
-        <Link
-          href="/signin"
+        <DropdownItem
+          tag="button"
+          onClick={logout} // <-- LLAMA A LA FUNCIÓN LOGOUT DEL CONTEXTO
+          onItemClick={closeDropdown}
           className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
         >
           <svg
@@ -164,7 +196,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
             />
           </svg>
           Sign out
-        </Link>
+        </DropdownItem>
       </Dropdown>
     </div>
   );
