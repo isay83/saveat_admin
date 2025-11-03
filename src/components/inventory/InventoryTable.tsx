@@ -57,13 +57,13 @@ export default function InventoryTable({
           <Table>
             <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
               <TableRow>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Producto</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Estado</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Product</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Status</TableCell>
                 <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Stock</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Precio</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Categoría</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Caducidad</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-end ...">Acciones</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Price</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Category</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start ...">Expiration</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-end ...">Actions</TableCell>
               </TableRow>
             </TableHeader>
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">

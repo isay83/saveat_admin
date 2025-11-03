@@ -76,19 +76,19 @@ export default function DonorsPage() {
 
   return (
     <div>
-      <PageBreadcrumb pageTitle="Gestión de Donantes" />
+      <PageBreadcrumb pageTitle="Donors Management" />
 
       <div className="flex justify-end mb-4">
         {/* Solo mostramos el botón "Añadir" si es un admin */}
         {user?.role === 'admin' && (
           <Button size="md" variant="primary" onClick={handleOpenCreateModal} startIcon={<PlusIcon />}>
-            Añadir Donante
+            Add Donor
           </Button>
         )}
       </div>
 
       <div className="space-y-6">
-        {isLoading && <p className="text-center">Cargando donantes...</p>}
+        {isLoading && <p className="text-center">Loading donors...</p>}
         {error && <p className="text-center text-error-500">{error}</p>}
         {!isLoading && !error && (
           <DonorTable

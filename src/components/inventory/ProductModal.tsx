@@ -236,10 +236,10 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
         {/* --- Encabezado del Modal --- */}
         <div className="px-2 pr-14">
           <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-            {isEditMode ? 'Editar Producto' : 'Añadir Nuevo Producto'}
+            {isEditMode ? 'Edit Product' : 'Add New Product'}
           </h4>
           <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-            {isEditMode ? 'Modifica los detalles del producto.' : 'Rellena los campos para añadir una nueva donación.'}
+            {isEditMode ? 'Modify product details.' : 'Fill in the fields to add a new donation.'}
           </p>
         </div>
 
@@ -249,31 +249,31 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
           {/* --- Campos Principales --- */}
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
             <div className="lg:col-span-2">
-              <Label htmlFor="name">Nombre del Producto</Label>
+              <Label htmlFor="name">Product Name</Label>
               <Input id="name" name="name" type="text" value={formData.name} onChange={handleInputChange} required />
             </div>
             <div>
-              <Label htmlFor="brand">Marca</Label>
-              <Input id="brand" name="brand" type="text" value={formData.brand} onChange={handleInputChange} placeholder="Ej. Bimbo, Lala" />
+              <Label htmlFor="brand">Brand</Label>
+              <Input id="brand" name="brand" type="text" value={formData.brand} onChange={handleInputChange} placeholder="Eg. Bimbo, Lala" />
             </div>
             <div>
-              <Label htmlFor="category">Categoría</Label>
-              <Input id="category" name="category" type="text" value={formData.category} onChange={handleInputChange} placeholder="Ej. Panadería, Lácteos" />
+              <Label htmlFor="category">Category</Label>
+              <Input id="category" name="category" type="text" value={formData.category} onChange={handleInputChange} placeholder="Eg. Panadería, Lácteos" />
             </div>
           </div>
 
           {/* --- Stock y Precio --- */}
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-3 mt-5">
             <div>
-              <Label htmlFor="quantity_available">Cantidad (Stock)</Label>
+              <Label htmlFor="quantity_available">Stock</Label>
               <Input id="quantity_available" name="quantity_available" type="number" min="0" step="1" value={formData.quantity_available} onChange={handleInputChange} required />
             </div>
              <div>
-              <Label htmlFor="unit">Unidad</Label>
-              <Input id="unit" name="unit" type="text" value={formData.unit} onChange={handleInputChange} placeholder="Ej. piezas, kg, litros" required />
+              <Label htmlFor="unit">Unit</Label>
+              <Input id="unit" name="unit" type="text" value={formData.unit} onChange={handleInputChange} placeholder="Eg. piezas, kg, litros" required />
             </div>
             <div>
-              <Label htmlFor="price">Precio (MXN)</Label>
+              <Label htmlFor="price">Price (MXN)</Label>
               <Input id="price" name="price" type="number" min="0" step="0.01" value={formData.price} onChange={handleInputChange} required />
             </div>
           </div>
@@ -281,7 +281,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
           {/* --- Donante y Estado --- */}
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2 mt-5">
             <div>
-              <Label htmlFor="donor_id">Donante</Label>
+              <Label htmlFor="donor_id">Donor</Label>
               <div className="relative">
                 <Select
                   id="donor_id"
@@ -294,7 +294,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
                 //   required
                   // En lugar de 'children', le pasamos 'options' como prop
                   options={isLoadingDonors 
-                    ? [{ value: '', label: 'Cargando donantes...' }] 
+                    ? [{ value: '', label: 'Loading donors...' }] 
                     : [
                         // { value: '', label: 'Selecciona un donante' },
                         ...donors.map(d => ({ value: d._id, label: d.name }))
@@ -308,7 +308,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
               </div>
             </div>
              <div>
-              <Label htmlFor="status">Estado</Label>
+              <Label htmlFor="status">Status</Label>
               <div className="relative">
                 <Select
                   id="status"
@@ -320,9 +320,9 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
                 //   required
                   // Definimos las opciones directamente
                   options={[
-                    { value: 'disponible', label: 'Disponible (Público)' },
-                    { value: 'borrador', label: 'Borrador (Oculto)' },
-                    { value: 'agotado', label: 'Agotado' },
+                    { value: 'disponible', label: 'Available (Public)' },
+                    { value: 'borrador', label: 'Draft (Hidden)' },
+                    { value: 'agotado', label: 'Out of Stock' },
                   ]}
                   defaultValue={formData.status}
                 />
@@ -336,23 +336,23 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
           {/* --- Fechas y Tiempos --- */}
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2 mt-5">
             <div>
-              <Label htmlFor="expiry_date">Fecha de Caducidad</Label>
+              <Label htmlFor="expiry_date">Expiration Date</Label>
               <Input id="expiry_date" name="expiry_date" type="date" value={formData.expiry_date} onChange={handleInputChange} required />
             </div>
             <div>
-              <Label htmlFor="pickup_window_hours">Ventana de Recogida (Horas)</Label>
+              <Label htmlFor="pickup_window_hours">Pickup Window (Hours)</Label>
               <Input id="pickup_window_hours" name="pickup_window_hours" type="number" min="1" value={formData.pickup_window_hours} onChange={handleInputChange} required />
             </div>
           </div>
 
           {/* --- Descripción --- */}
           <div className="mt-5">
-            <Label htmlFor="description">Descripción (Opcional)</Label>
+            <Label htmlFor="description">Description (Optional)</Label>
             <TextArea
               id="description"
               name="description"
               rows={3}
-              placeholder="Añade detalles sobre el producto..."
+              placeholder="Add details about the product..."
               value={formData.description}
               // Usamos una función flecha
               onChange={(value) => handleValueChange('description', value)}
@@ -361,7 +361,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
 
           {/* --- Carga de Imagen --- */}
           <div className="mt-5">
-            <Label htmlFor="productImageInput">Imagen del Producto</Label>
+            <Label htmlFor="productImageInput">Producto Image</Label>
             <div className="flex items-center gap-4 mt-1.5">
                 <Image
                     width={64}
@@ -378,7 +378,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
                     className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 dark:file:bg-brand-500/10 dark:file:text-brand-400 dark:hover:file:bg-brand-500/20"
                 />
             </div>
-            {isUploading && <p className="mt-2 text-sm text-blue-500">Subiendo imagen...</p>}
+            {isUploading && <p className="mt-2 text-sm text-blue-500">Uploading image...</p>}
             {uploadError && <p className="mt-2 text-sm text-error-500">{uploadError}</p>}
           </div>
 
@@ -388,10 +388,10 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
         {error && <p className="mt-4 px-2 text-sm text-center text-error-500">{error}</p>}
         <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
           <Button size="sm" variant="outline" onClick={onClose} type="button" disabled={isSaving || isUploading}>
-            Cancelar
+            Cancel
           </Button>
           <Button size="sm" type="submit" disabled={isSaving || isUploading}>
-            {isSaving ? (isEditMode ? 'Actualizando...' : 'Creando...') : (isEditMode ? 'Guardar Cambios' : 'Crear Producto')}
+            {isSaving ? (isEditMode ? 'Actualizando...' : 'Creando...') : (isEditMode ? 'Save Changes' : 'Create Product')}
           </Button>
         </div>
 

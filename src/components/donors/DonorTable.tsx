@@ -36,10 +36,10 @@ export default function DonorTable({
           <Table>
             <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
               <TableRow>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 ...">Nombre Donante</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 ...">Nombre Contacto</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 ...">Teléfono Contacto</TableCell>
-                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-end ...">Acciones</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 ...">Donor Name</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 ...">Contact Name</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 ...">Contact Phone</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-end ...">Actions</TableCell>
               </TableRow>
             </TableHeader>
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
@@ -65,7 +65,7 @@ export default function DonorTable({
                         disabled={!canModify} // <-- Seguridad de UI
                       >
                         <PencilIcon className="w-4 h-4" />
-                        Editar
+                        Edit
                       </Button>
                       <Button 
                         size="sm" 

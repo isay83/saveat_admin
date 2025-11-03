@@ -88,24 +88,24 @@ export default function DonorModal({ isOpen, onClose, onSuccess, donor }: DonorM
         
         <div className="px-2 pr-14">
           <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-            {isEditMode ? 'Editar Donante' : 'Nuevo Donante'}
+            {isEditMode ? 'Edit Donor' : 'New Donor'}
           </h4>
           <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-            {isEditMode ? 'Actualiza los datos del donante.' : 'Añade un nuevo donante a la lista.'}
+            {isEditMode ? 'Update donor information.' : 'Add a new donor to the list.'}
           </p>
         </div>
 
         <div className="custom-scrollbar h-auto max-h-[60vh] overflow-y-auto px-2 pb-3 space-y-5">
           <div>
-            <Label htmlFor="name">Nombre del Donante (Ej. Restaurante, Empresa)</Label>
+            <Label htmlFor="name">Donor Name (Eg. Restaurante, Empresa)</Label>
             <Input id="name" name="name" type="text" value={formData.name} onChange={handleChange} required />
           </div>
           <div>
-            <Label htmlFor="contact_name">Nombre del Contacto (Opcional)</Label>
+            <Label htmlFor="contact_name">Contact Name (Opional)</Label>
             <Input id="contact_name" name="contact_name" type="text" value={formData.contact_name} onChange={handleChange} />
           </div>
           <div>
-            <Label htmlFor="contact_phone">Teléfono del Contacto (Opcional)</Label>
+            <Label htmlFor="contact_phone">Contact Phone (Optional)</Label>
             <Input id="contact_phone" name="contact_phone" type="tel" value={formData.contact_phone} onChange={handleChange} />
           </div>
         </div>
@@ -113,10 +113,10 @@ export default function DonorModal({ isOpen, onClose, onSuccess, donor }: DonorM
         {error && <p className="mt-4 px-2 text-sm text-center text-error-500">{error}</p>}
         <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
           <Button size="sm" variant="outline" onClick={onClose} type="button" disabled={isSaving}>
-            Cancelar
+            Cancel
           </Button>
           <Button size="sm" type="submit" disabled={isSaving}>
-            {isSaving ? 'Guardando...' : 'Guardar'}
+            {isSaving ? 'Saving...' : 'Save'}
           </Button>
         </div>
       </form>

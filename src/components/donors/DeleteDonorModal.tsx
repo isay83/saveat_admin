@@ -50,22 +50,22 @@ export default function DeleteDonorModal({ isOpen, onClose, onSuccess, donor }: 
         </span>
         
         <h4 className="mt-5 mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-          ¿Eliminar Donante?
+          Delete Donor?
         </h4>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          Estás a punto de eliminar a
+          You are about to delete
           <strong className="font-medium text-gray-700 dark:text-white/80"> {donor?.name}</strong>.
-          Esta acción no se puede deshacer.
+          This action cannot be undone.
         </p>
 
         {error && <p className="mt-4 text-sm text-center text-error-500">{error}</p>}
 
         <div className="flex items-center justify-center w-full gap-3 mt-8">
           <Button size="sm" variant="outline" onClick={handleClose} disabled={isDeleting}>
-            Cancelar
+            Cancel
           </Button>
           <Button size="sm" variant="primary" onClick={handleDelete} disabled={isDeleting} className="bg-error-500 hover:bg-error-600 disabled:bg-error-300">
-            {isDeleting ? 'Eliminando...' : 'Sí, Eliminar'}
+            {isDeleting ? 'Deleting...' : 'Yes, Delete'}
           </Button>
         </div>
       </div>

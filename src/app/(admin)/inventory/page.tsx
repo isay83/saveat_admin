@@ -71,16 +71,16 @@ export default function InventoryPage() {
   // --- Renderizado ---
   return (
     <div>
-      <PageBreadcrumb pageTitle="Gestión de Inventario" />
+      <PageBreadcrumb pageTitle="Inventory Management" />
 
       <div className="flex justify-end mb-4">
         <Button size="md" variant="primary" onClick={handleOpenCreateModal} startIcon={<PlusIcon />}>
-          Añadir Producto
+          Add Product
         </Button>
       </div>
 
       <div className="space-y-6">
-        {isLoading && <p className="text-center">Cargando productos...</p>}
+        {isLoading && <p className="text-center">Loading products...</p>}
         {error && <p className="text-center text-error-500">{error}</p>}
         {!isLoading && !error && (
           <InventoryTable
