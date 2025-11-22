@@ -6,6 +6,7 @@ import apiService from '@/lib/apiService';
 import { IReservation } from '@/types/reservation';
 import ReservationTable from '@/components/reservations/ReservationTable';
 import ConfirmModal from '@/components/reservations/ConfirmModal'; // Importar el modal genérico
+import Image from 'next/image';
 // import { useAuth } from '@/context/AuthContext';
 
 // Metadata (solo funciona en Server Components, pero es bueno tenerla)
@@ -92,6 +93,10 @@ export default function ReservationsPage() {
     }
   };
 
+  // Helper para formatear moneda en el modal
+  const formatCurrency = (amount: number) => 
+    new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(amount);
+
   return (
     <div>
       <PageBreadcrumb pageTitle="Reservation Management" />
@@ -128,20 +133,95 @@ export default function ReservationsPage() {
         title={modalState.action === 'confirm' ? 'Confirm Delivery' : 'Cancel Reservation'}
         message={
           <>
-            <p>
-              Are you sure you want to {modalState.action === 'confirm' ? 'confirm delivery of' : 'cancel'} this reservation?
+          <div className="space-y-4 text-center">
+            <p className="text-gray-600 dark:text-gray-300">
+              ¿Are you sure you want to {modalState.action === 'confirm' ? 'confirm delivery' : 'cancel'} for this reservation?
             </p>
-            <p className="font-medium text-gray-700 dark:text-white/80 mt-2">
-              {modalState.reservation?.quantity_reserved}x {modalState.reservation?.product_name}
+            
+            {/* --- INFORMACIÓN DETALLADA DE LA RESERVA --- */}
+            {modalState.reservation && (
+              <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 text-left">
+                
+                {/* Producto y Cantidad */}
+                <div className="flex items-start gap-3 mb-3">
+                   <div className="w-12 h-12 rounded-md overflow-hidden bg-gray-200 shrink-0">
+                        <Image
+                        src={modalState.reservation.product_id.image_url || '/placeholder.png'}
+                        alt={modalState.reservation.product_name}
+                        width={48}
+                        height={48}
+                        className="object-cover"
+                        />
+                   </div>
+                   <div>
+                      <p className="font-semibold text-gray-800 dark:text-white">
+                        {modalState.reservation.product_name}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Quantity: <span className="font-medium text-gray-700 dark:text-gray-300">{modalState.reservation.quantity_reserved} {modalState.reservation.unit}</span>
+                      </p>
+                   </div>
+                </div>
+
+                <div className="border-t border-gray-200 dark:border-gray-700 my-3"></div>
+
+                {/* Información de Pago */}
+                <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">Total:</span>
+                        <span className="font-bold text-lg text-gray-900 dark:text-white">
+                            {modalState.reservation.total_price === 0 ? 'Gratis' : formatCurrency(modalState.reservation.total_price)}
+                        </span>
+                    </div>
+
+                    {modalState.reservation.total_price > 0 && (
+                        <>
+                            <div className="flex justify-between items-center">
+                                <span className="text-sm text-gray-500 dark:text-gray-400">Payment Method:</span>
+                                <span className="text-sm font-medium text-gray-800 dark:text-gray-200 capitalize">
+                                    {modalState.reservation.payment_method === 'card' ? 'Tarjeta' : 'Efectivo'}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-sm text-gray-500 dark:text-gray-400">Payment:</span>
+                                <span className={`text-sm font-bold px-2 py-0.5 rounded ${modalState.reservation.is_paid ? 'bg-success-100 text-success-700' : 'bg-warning-100 text-warning-700'}`}>
+                                    {modalState.reservation.is_paid ? 'PAGADO' : 'PENDIENTE DE PAGO'}
+                                </span>
+                            </div>
+                        </>
+                    )}
+                </div>
+
+                {/* Mensaje de Acción para el Cajero */}
+                {modalState.action === 'confirm' && (
+                    <div className={`mt-4 p-3 rounded-md text-center text-sm font-medium ${
+                        modalState.reservation.total_price > 0 && !modalState.reservation.is_paid 
+                        ? 'bg-warning-50 text-warning-700 border border-warning-200'
+                        : 'bg-success-50 text-success-700 border border-success-200'
+                    }`}>
+                        {modalState.reservation.total_price === 0 
+                            ? "✅ Deliver product (Free)" 
+                            : !modalState.reservation.is_paid 
+                                ? `⚠️ CHARGE ${formatCurrency(modalState.reservation.total_price)} BEFORE DELIVERY`
+                                : "✅ Already paid. Deliver product."
+                        }
+                    </div>
+                )}
+
+              </div>
+            )}
+            {/* --------------------------------------- */}
+
+            <p className="text-xs text-gray-400 mt-2">
+               Customer: {modalState.reservation?.user_id.first_name} {modalState.reservation?.user_id.last_name}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-               to {modalState.reservation?.user_id.first_name} {modalState.reservation?.user_id.last_name}
-            </p>
+
             {/* Mostramos el error de la API (si lo hay) dentro del modal */}
-            {error && modalState.isOpen && <p className="mt-4 text-sm text-error-500">{error}</p>}
+            {error && modalState.isOpen && <p className="mt-4 text-sm text-error-500 bg-error-50 p-2 rounded border border-error-200">{error}</p>}
+          </div>
           </>
         }
-        confirmText={modalState.action === 'confirm' ? 'Yes, Confirm' : 'Yes, Cancel'}
+        confirmText={modalState.action === 'confirm' ? 'Yes, confirm' : 'Yes, cancel'}
         confirmColor={modalState.action === 'confirm' ? 'success' : 'error'}
       />
     </div>

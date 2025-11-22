@@ -46,7 +46,7 @@ export default function ConfirmModal({
 
         <div className="flex items-center justify-center w-full gap-3 mt-8">
           <Button size="sm" variant="outline" onClick={onClose} disabled={isConfirming}>
-            Cancelar
+            Cancel
           </Button>
           <Button 
             size="sm" 

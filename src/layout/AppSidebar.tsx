@@ -32,7 +32,10 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    subItems: [
+      { name: "Food Bank", path: "/food-bank", pro: false, new: true},
+      { name: "INEGI", path: "/inegi",}
+    ],
   },
   // --- AÑADIR ESTE NUEVO OBJETO ---
   {

@@ -38,6 +38,23 @@ export default function ReservationTable({
     });
   };
 
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'MXN',
+    }).format(amount);
+  };
+
+  // Traducir método de pago o mostrar Gratis
+  const getPaymentDisplay = (res: IReservation) => {
+    if (res.total_price === 0) return <Badge size="sm" color="success">Gratis</Badge>;
+    
+    if (res.payment_method === 'card') return <span className="text-gray-700 dark:text-gray-300">Tarjeta</span>;
+    if (res.payment_method === 'cash') return <span className="text-gray-700 dark:text-gray-300">Efectivo</span>;
+    
+    return <span className="text-gray-400">-</span>;
+  };
+
   // Función para obtener el color del badge de estado
   const getStatusBadgeColor = (status: IReservation['status']): "success" | "warning" | "error" | "light" => {
     switch (status) {
@@ -63,6 +80,11 @@ export default function ReservationTable({
                 <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Customer</TableCell>
                 <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Product</TableCell>
                 <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Quantity</TableCell>
+                {/* Nuevas Columnas */}
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Total</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Payment Method</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Payment</TableCell>
+                {/* Fin Nuevas Columnas */}
                 <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Status</TableCell>
                 <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Deadline</TableCell>
                 <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start">Reservation Date</TableCell>
@@ -92,6 +114,26 @@ export default function ReservationTable({
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                     {res.quantity_reserved} {res.unit}
                   </TableCell>
+
+                  {/* Columna Total */}
+                  <TableCell className="px-4 py-3 text-gray-800 font-medium text-start text-theme-sm dark:text-white/90">
+                    {formatCurrency(res.total_price)}
+                  </TableCell>
+
+                  {/* Columna Método de Pago */}
+                  <TableCell className="px-4 py-3 text-start text-theme-sm">
+                    {getPaymentDisplay(res)}
+                  </TableCell>
+
+                  {/* Columna Estado de Pago (Pagado / Pendiente) */}
+                  <TableCell className="px-4 py-3 text-start">
+                    {res.is_paid ? (
+                      <Badge size="sm" color="success" variant="light">Pagado</Badge>
+                    ) : (
+                      <Badge size="sm" color="warning" variant="light">Pendiente</Badge>
+                    )}
+                  </TableCell>
+
                   <TableCell className="px-4 py-3 text-start">
                     <Badge size="sm" color={getStatusBadgeColor(res.status)}>
                       {res.status}
@@ -114,7 +156,7 @@ export default function ReservationTable({
                         className="disabled:bg-gray-100 disabled:opacity-50"
                       >
                         <CheckLineIcon className="w-4 h-4" />
-                        Confirm
+                        {/* Confirm */}
                       </Button>
                       <Button 
                         size="sm" 
@@ -125,7 +167,7 @@ export default function ReservationTable({
                         className="disabled:bg-gray-100 disabled:opacity-50"
                       >
                         <CloseLineIcon className="w-4 h-4" />
-                        Cancel
+                        {/* Cancel */}
                       </Button>
                     </div>
                   </TableCell>

@@ -25,6 +25,8 @@ export interface IReservation {
     unit: string;
     total_price: number;
     status: 'pendiente' | 'recogido' | 'cancelado' | 'expirado';
+    payment_method?: 'card' | 'cash'; // Opcional por si hay datos viejos
+    is_paid: boolean;
     pickup_deadline: string; // la API lo enviará como string ISO
     picked_up_at?: string;
     createdAt: string;
