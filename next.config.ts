@@ -20,6 +20,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.cityclub.com.mx',
       },
+      {
+        protocol: 'https',
+        hostname: 'i5.walmartimages.com.mx',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i5.walmartimages.com',
+      }
     ]
   },
   webpack(config) {

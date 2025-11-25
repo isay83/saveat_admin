@@ -34,7 +34,11 @@ const navItems: NavItem[] = [
     name: "Dashboard",
     subItems: [
       { name: "Food Bank", path: "/food-bank", pro: false, new: true},
-      { name: "INEGI", path: "/inegi",}
+      { name: "INEGI Data", path: "/inegi", new: true },
+      { name: "Social Trends", path: "/social-media", new: true },
+      { name: "Internal Goals", path: "/excel-data", new: true },
+      { name: "Market Analysis", path: "/web-data", new: true },
+      { name: "Weather Logistics", path: "/weather", new: true },
     ],
   },
   // --- AÑADIR ESTE NUEVO OBJETO ---

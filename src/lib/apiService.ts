@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // 1. Definimos la URL base de la API
-const API_URL = 'http://localhost:5000/api/v1';
+// Si por alguna razón no existe, usamos localhost como respaldo (fallback).
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
 
 // 2. Creamos una instancia de axios
 const apiService = axios.create({
