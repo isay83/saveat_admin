@@ -108,13 +108,13 @@ export default function InegiMap() {
         stateName.toLowerCase().includes(d.state.toLowerCase())
     );
 
-    const valueText = stateInfo ? `${stateInfo.value}%` : "Sin datos";
+    const valueText = stateInfo ? `${stateInfo.value}%` : "No data";
 
     layer.bindPopup(`
       <div class="text-center">
         <strong class="text-lg">${stateName}</strong><br/>
         <span class="text-gray-600">${
-          povertyType === "extrema" ? "Pobreza Extrema" : "Pobreza Total"
+          povertyType === "extreme" ? "Extreme Poverty" : "Total Poverty"
         }:</span>
         <br/><span class="text-xl font-bold text-orange-600">${valueText}</span>
       </div>
@@ -139,7 +139,7 @@ export default function InegiMap() {
   if (!geoData)
     return (
       <div className="h-[400px] w-full bg-gray-100 dark:bg-gray-900 rounded-xl animate-pulse flex items-center justify-center text-gray-400">
-        Cargando mapa base...
+        Loading base map...
       </div>
     );
 
@@ -149,31 +149,31 @@ export default function InegiMap() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <div>
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-            Mapa de Pobreza en México
+            Poverty Map of Mexico
           </h3>
           <p className="text-sm text-gray-500">
-            Datos oficiales procesados por R
+            Official data processed by R
           </p>
         </div>
 
         <div className="flex gap-4 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">
-              Indicador
+              Indicator
             </label>
             <select
               className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500"
               value={povertyType}
               onChange={(e) => setPovertyType(e.target.value)}
             >
-              <option value="total">Pobreza Total</option>
-              <option value="moderada">Pobreza Moderada</option>
-              <option value="extrema">Pobreza Extrema</option>
+              <option value="total">Total Poverty</option>
+              <option value="moderada">Moderate Poverty</option>
+              <option value="extrema">Extreme Poverty</option>
             </select>
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">
-              Filtro Mínimo: {minVal}%
+              Minimum Filter: {minVal}%
             </label>
             <input
               type="range"
@@ -216,9 +216,9 @@ export default function InegiMap() {
 
       {/* Leyenda */}
       <div className="flex items-center justify-center mt-4 gap-2 text-xs text-gray-500">
-        <span>Bajo (0%)</span>
+        <span>Low (0%)</span>
         <div className="w-48 h-3 rounded-full bg-gradient-to-r from-[#FFEDD5] to-[#C2410C]"></div>
-        <span>Alto (40%+)</span>
+        <span>High (40%+)</span>
       </div>
     </div>
   );

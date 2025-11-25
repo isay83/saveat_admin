@@ -42,10 +42,10 @@ export default function InegiTopList() {
     <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6 h-full">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-          Top 5: Pobreza Extrema
+          Top 5: Extreme Poverty
         </h3>
         <p className="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
-          Estados con mayor índice crítico
+          States with the highest critical index
         </p>
       </div>
 
@@ -93,7 +93,7 @@ export default function InegiTopList() {
       
       <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
           <p className="text-xs text-center text-gray-400">
-              Datos procesados directamente del archivo .xlsx de INEGI
+              Data processed directly from INEGI&apos;s .xlsx file
           </p>
       </div>
     </div>

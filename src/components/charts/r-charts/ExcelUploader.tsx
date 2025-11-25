@@ -30,14 +30,14 @@ export default function ExcelUploader({ onUploadSuccess }: { onUploadSuccess: ()
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Fallo en la subida");
+      if (!res.ok) throw new Error("Failure during upload");
 
-      setMessage({ type: 'success', text: 'Archivo procesado correctamente por R' });
+      setMessage({ type: 'success', text: 'File successfully processed by R' });
       setFile(null); // Limpiar input
       onUploadSuccess(); // Avisar al padre para recargar la gráfica
     } catch (error) {
       console.error(error);
-      setMessage({ type: 'error', text: 'Error al conectar con el servidor de R' });
+      setMessage({ type: 'error', text: 'Error connecting to the R server' });
     } finally {
       setUploading(false);
     }
@@ -46,7 +46,7 @@ export default function ExcelUploader({ onUploadSuccess }: { onUploadSuccess: ()
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-white/[0.03]">
       <h3 className="mb-4 text-lg font-semibold text-gray-800 dark:text-white/90">
-        Actualizar Metas (Fuente: Excel)
+        Update Goals (Source: Excel)
       </h3>
       
       <div className="flex flex-col gap-4">
@@ -69,8 +69,8 @@ export default function ExcelUploader({ onUploadSuccess }: { onUploadSuccess: ()
                 ) : (
                     <>
                         <ArrowUpIcon className="w-8 h-8 text-gray-400 mb-2" />
-                        <p className="text-sm text-gray-500">Arrastra tu Excel aquí o haz clic</p>
-                        <p className="text-xs text-gray-400 mt-1">Columnas requeridas: Concepto, Meta, Actual</p>
+                        <p className="text-sm text-gray-500">Drag your Excel file here or click</p>
+                        <p className="text-xs text-gray-400 mt-1">Required columns: Concepto, Meta, Actual</p>
                     </>
                 )}
             </div>
@@ -89,10 +89,10 @@ export default function ExcelUploader({ onUploadSuccess }: { onUploadSuccess: ()
             {uploading ? (
                 <>
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Procesando...
+                    Processing...
                 </>
             ) : (
-                "Subir y Recalcular"
+                "Upload and Recalculate"
             )}
         </button>
 

@@ -33,11 +33,11 @@ export default function ExcelDataPage() {
           {/* Instrucciones / Info */}
           <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-white/[0.03]">
             <h3 className="text-base font-semibold text-gray-800 dark:text-white/90 mb-2">
-                ¿Cómo funciona?
+                How does it work?
             </h3>
             <p className="text-sm text-gray-500 mb-4">
-                Esta sección se alimenta de un archivo local procesado por R.
-                Sube tu reporte mensual con el siguiente formato:
+                This section is fed from a local file processed by R.
+                Upload your monthly report using the following format:
             </p>
             <div className="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg border border-gray-200 dark:border-gray-700 overflow-x-auto">
                 <table className="w-full text-xs text-gray-600 dark:text-gray-300 font-mono border-collapse">

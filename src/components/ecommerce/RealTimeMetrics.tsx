@@ -31,7 +31,7 @@ export const RealTimeMetrics = () => {
         setMetrics(data);
         setLoading(false);
       } catch (err) {
-        console.error("Fallo al cargar métricas de R:", err);
+        console.error("Error loading R metrics:", err);
         setError(true);
         setLoading(false);
       }

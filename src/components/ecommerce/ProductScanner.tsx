@@ -74,7 +74,7 @@ export default function ProductScanner({ onSearchComplete }: ProductScannerProps
         <form onSubmit={handleSearch} className="flex gap-4">
           <input
             type="text"
-            placeholder="Ej. Leche, Arroz, Huevo..."
+            placeholder="Ex. Leche, Arroz, Huevo..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="flex-1 rounded-lg border border-gray-300 bg-transparent px-5 py-3 text-gray-800 outline-none focus:border-brand-500 dark:border-gray-700 dark:text-white"
@@ -84,7 +84,7 @@ export default function ProductScanner({ onSearchComplete }: ProductScannerProps
             disabled={loading}
             className="rounded-lg bg-brand-500 px-8 py-3 font-medium text-white hover:bg-brand-600 disabled:opacity-50"
           >
-            {loading ? "Escaneando Web..." : "Buscar"}
+            {loading ? "Scanning Web..." : "Search"}
           </button>
         </form>
       </div>
@@ -106,7 +106,7 @@ export default function ProductScanner({ onSearchComplete }: ProductScannerProps
                         {isMyStore ? <BoxIcon className="w-4 h-4" /> : storeKey.charAt(0)}
                     </div>
                     <h3 className={`font-bold text-lg ${isMyStore ? 'text-brand-600' : 'text-gray-700 dark:text-gray-200'}`}>
-                        {isMyStore ? "Nuestra Tienda" : storeKey}
+                        {isMyStore ? "Our Store" : storeKey}
                     </h3>
                 </div>
 

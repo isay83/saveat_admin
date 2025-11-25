@@ -32,13 +32,13 @@ export default function SocialInsightsCards({ data, loading }: Props) {
       {/* --- CARD 1: IMPACTO DIGITAL (Tendencia) --- */}
       <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-white/[0.03]">
         <h3 className="mb-2 text-lg font-semibold text-gray-800 dark:text-white/90">
-          Impacto Digital
+          Digital Impact
         </h3>
         <p className="text-sm text-gray-500 mb-4">
-          Comportamiento reciente de búsquedas en México.
+          Recent search behavior in Mexico.
         </p>
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Estado:</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">State:</span>
           <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
             data.trend.includes("Aumento") 
               ? "bg-success-50 text-success-600 border-success-200" 
@@ -54,7 +54,7 @@ export default function SocialInsightsCards({ data, loading }: Props) {
       {/* --- CARD 2: PALABRAS CLAVE (Trending Topics) --- */}
       <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-white/[0.03]">
         <h3 className="mb-2 text-lg font-semibold text-gray-800 dark:text-white/90">
-          Top Búsquedas
+          Top Searches
         </h3>
         <div className="flex flex-wrap gap-2 mt-3">
           {data.keywords.map((tag, idx) => (
@@ -69,12 +69,12 @@ export default function SocialInsightsCards({ data, loading }: Props) {
       <div className="rounded-2xl border border-brand-100 bg-brand-50/50 p-6 dark:border-gray-800 dark:bg-white/[0.03]">
         <div className="flex items-start justify-between">
             <h3 className="mb-2 text-lg font-semibold text-brand-600 dark:text-white/90">
-            Estrategia IA
+            AI Strategy
             </h3>
             <GroupIcon className="w-5 h-5 text-brand-500" />
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-            Basado en el histórico, te recomendamos lanzar campañas los:
+            Based on historical data, we recommend launching campaigns on:
         </p>
         <p className="text-xl font-bold text-gray-800 dark:text-white mt-2 capitalize">
             📅 {data.best_day}

@@ -17,7 +17,7 @@ export default function SocialTrendsChart({ chartData, loading }: Props) {
     return (
       <div className="rounded-2xl border border-gray-200 bg-white p-6 h-[310px] flex flex-col items-center justify-center dark:border-gray-800 dark:bg-white/[0.03]">
         <div className="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-gray-500 text-sm">Analizando Big Data con R...</p>
+        <p className="text-gray-500 text-sm">Analyzing Big Data with R...</p>
       </div>
     );
   }
@@ -49,7 +49,7 @@ export default function SocialTrendsChart({ chartData, loading }: Props) {
     <div className="rounded-2xl border border-gray-200 bg-white px-5 pt-5 pb-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-          Interés de Búsqueda (Google Trends)
+          Search Interest (Google Trends)
         </h3>
       </div>
       <div className="max-w-full overflow-x-auto custom-scrollbar">

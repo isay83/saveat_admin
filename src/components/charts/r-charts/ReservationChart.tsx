@@ -78,7 +78,7 @@ export default function ReservationChart() {
   // AQUÍ CONECTAMOS EL EJE Y CON LOS DATOS DE R
   const series = [
     {
-      name: "Cantidad",
+      name: "Quantity",
       data: chartData.data, // [5, 10, 2]
     },
   ];

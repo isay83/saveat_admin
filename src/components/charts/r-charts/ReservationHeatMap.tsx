@@ -84,7 +84,7 @@ export default function ReservationHeatmap() {
     layer.bindPopup(`
       <div class="text-center">
         <strong class="text-lg">${stateName}</strong><br/>
-        <span class="text-gray-600">Reservas Totales:</span><br/>
+        <span class="text-gray-600">Total Reservations:</span><br/>
         <span class="text-xl font-bold text-brand-600">${sales}</span>
       </div>
     `);
@@ -108,10 +108,10 @@ export default function ReservationHeatmap() {
     <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-white/[0.03]">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-          Mapa de Calor de Ventas
+          Sales Heat Map
         </h3>
         <p className="text-sm text-gray-500">
-          Concentración geográfica de reservas (Basado en CP de usuarios)
+          Geographic concentration of reserves (Based on user CP)
         </p>
       </div>
 

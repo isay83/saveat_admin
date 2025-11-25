@@ -21,8 +21,8 @@ export default function WebDataPage() {
       {/* Nota legal / disclaimer */}
       <div className="mt-8 text-center">
         <p className="text-xs text-gray-400">
-            * Los precios son obtenidos en tiempo real de los sitios públicos de los proveedores.
-            Saveat no garantiza la disponibilidad de estos precios en tienda física.
+            * Prices are obtained in real time from suppliers&apos; public websites.
+            Saveat does not guarantee the availability of these prices in physical stores.
         </p>
       </div>
     </div>

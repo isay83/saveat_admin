@@ -26,19 +26,19 @@ export default function InegiPage() {
           {/* Tarjeta de Resumen */}
           <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-white/[0.03]">
             <h3 className="mb-4 text-lg font-semibold text-gray-800 dark:text-white/90">
-              Resumen Nacional
+              National Summary
             </h3>
             <p className="text-gray-500 text-sm mb-4 leading-relaxed">
-              Los datos visualizados provienen de la Encuesta Nacional de Ingresos y Gastos de los Hogares (ENIGH) 2024.
+              The data displayed comes from the 2024 National Household Income and Expenditure Survey (ENIGH).
             </p>
             
             <div className="space-y-3">
                 <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Media Nacional (Extrema)</span>
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">National Average (Extreme)</span>
                     <span className="text-lg font-bold text-brand-600">~7.8%</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Estado más crítico</span>
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Most critical condition</span>
                     <span className="text-lg font-bold text-error-600">Chiapas</span>
                 </div>
             </div>
