@@ -40,7 +40,7 @@ export default function ReservationChart() {
 
   // 3. Configuración de la gráfica (Reutilizando tus estilos de BarChartOne)
   const options: ApexOptions = {
-    colors: ["#D14343", "#FFB020", "#465fff"], // Colores personalizados (Azul, Amarillo, Rojo)
+    colors: ["#D14343", "#FFB020", "#465fff", "#008000"], // Colores personalizados (Azul, Amarillo, Rojo)
     chart: {
       fontFamily: "Outfit, sans-serif",
       type: "bar",
@@ -59,7 +59,7 @@ export default function ReservationChart() {
     stroke: { show: true, width: 4, colors: ["transparent"] },
     // AQUÍ CONECTAMOS EL EJE X CON LOS DATOS DE R
     xaxis: {
-      categories: chartData.categories, // ["pendiente", "recogido", "cancelado"]
+      categories: chartData.categories, // ["pendiente", "recogido", "expirado", "cancelado"]
       axisBorder: { show: false },
       axisTicks: { show: false },
     },
