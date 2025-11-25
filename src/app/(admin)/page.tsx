@@ -1,4 +1,4 @@
-import { BoxIcon, PieChartIcon, UserIcon } from "@/icons";
+import { BoxIcon, GroupIcon, PieChartIcon } from "@/icons";
 import type { Metadata } from "next";
 import React from "react";
 
@@ -24,7 +24,7 @@ export default function Home() {
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg p-6 hover:shadow-lg dark:hover:shadow-xl transition">
-            <div className="text-4xl mb-2"><UserIcon/></div>
+            <div className="text-4xl mb-2"><GroupIcon/></div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Beneficiaries</h2>
             <p className="text-gray-600 dark:text-gray-400">Manage registered beneficiaries</p>
           </div>

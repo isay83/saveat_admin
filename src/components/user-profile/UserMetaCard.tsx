@@ -207,7 +207,7 @@ export default function UserMetaCard() {
                     className="absolute bottom-0 right-0 flex items-center justify-center w-6 h-6 bg-white border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                     aria-label="Edit profile picture"
                   >
-                   <PencilIcon className="w-3 h-3 text-gray-600 dark:text-gray-300" />
+                   <PencilIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                 </button>
             </div>
 
@@ -283,7 +283,7 @@ export default function UserMetaCard() {
             onClick={openEditModal} // Abrir el modal específico
             className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
           >
-             <PencilIcon className="w-4 h-4" /> {/* Usar el icono importado */}
+             <PencilIcon className="w-5 h-5" /> {/* Usar el icono importado */}
             Edit
           </button>
         </div>
