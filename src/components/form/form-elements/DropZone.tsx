@@ -1,25 +1,35 @@
 "use client";
 import React from "react";
-import ComponentCard from "../../common/ComponentCard";
-import { useDropzone } from "react-dropzone";
+// import ComponentCard from "../../common/ComponentCard";
+import { useDropzone, Accept } from "react-dropzone";
 
-const DropzoneComponent: React.FC = () => {
+interface DropZoneProps {
+  onFileSelect: (file: File) => void; // Función para devolver el archivo al padre
+  accept?: Accept; // Tipos de archivo permitidos (opcional)
+  className?: string; // Estilos extra
+  label?: string; // Texto personalizado
+}
+
+const DropzoneComponent: React.FC<DropZoneProps> = ({
+  onFileSelect,
+  accept,
+  className,
+  label = "Drag & Drop File Here or Browse",
+}) => {
   const onDrop = (acceptedFiles: File[]) => {
-    console.log("Files dropped:", acceptedFiles);
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      // Devolver el primer archivo seleccionado al componente padre
+      onFileSelect(acceptedFiles[0]);
+    }
     // Handle file uploads here
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      "image/png": [],
-      "image/jpeg": [],
-      "image/webp": [],
-      "image/svg+xml": [],
-    },
+    accept: accept, // Puedes definir tipos específicos si lo deseas
+    maxFiles: 1, // Solo un archivo a la vez
   });
   return (
-    <ComponentCard title="Dropzone">
       <div className="transition border border-gray-300 border-dashed cursor-pointer dark:hover:border-brand-500 dark:border-gray-700 rounded-xl hover:border-brand-500">
         <form
           {...getRootProps()}
@@ -29,6 +39,7 @@ const DropzoneComponent: React.FC = () => {
             ? "border-brand-500 bg-gray-100 dark:bg-gray-800"
             : "border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
         }
+        ${className || ""}
       `}
           id="demo-upload"
         >
@@ -57,11 +68,11 @@ const DropzoneComponent: React.FC = () => {
 
             {/* Text Content */}
             <h4 className="mb-3 font-semibold text-gray-800 text-theme-xl dark:text-white/90">
-              {isDragActive ? "Drop Files Here" : "Drag & Drop Files Here"}
+              {isDragActive ? "Drop File Here" : label}
             </h4>
 
             <span className=" text-center mb-5 block w-full max-w-[290px] text-sm text-gray-700 dark:text-gray-400">
-              Drag and drop your PNG, JPG, WebP, SVG images here or browse
+              Drag and drop your .xlsx here or browse
             </span>
 
             <span className="font-medium underline text-theme-sm text-brand-500">
@@ -70,7 +81,6 @@ const DropzoneComponent: React.FC = () => {
           </div>
         </form>
       </div>
-    </ComponentCard>
   );
 };
 

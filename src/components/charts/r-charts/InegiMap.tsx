@@ -36,6 +36,15 @@ interface MexicoGeoJsonProperties {
 
 type MapFeature = Feature<Geometry, MexicoGeoJsonProperties>;
 
+// --- AGREGA ESTO AQUÍ ---
+const STATE_ALIASES: Record<string, string> = {
+  "Distrito Federal": "Ciudad de México",
+  "Coahuila de Zaragoza": "Coahuila",
+  "Michoacán de Ocampo": "Michoacán",
+  "Veracruz de Ignacio de la Llave": "Veracruz",
+  "México": "Estado de México"
+};
+
 export default function InegiMap() {
   // Usamos unknown para el GeoJSON crudo inicial
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
@@ -75,6 +84,19 @@ export default function InegiMap() {
     fetchApiData();
   }, [povertyType, minVal, geoData]);
 
+  const findStateData = (mapName: string) => {
+    // 1. Traducir nombre (ej: Distrito Federal -> Ciudad de México)
+    const aliasedName = STATE_ALIASES[mapName] || mapName;
+
+    // 2. Buscar ignorando acentos y mayúsculas
+    return apiData.find(d => {
+      const dName = d.state.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quitar acentos
+      const mName = aliasedName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      
+      return dName === mName;
+    });
+  };
+
   // --- FUNCIÓN DE ESTILO ---
   const colorScale = scaleLinear<string>()
     .domain([0, 40])
@@ -83,15 +105,10 @@ export default function InegiMap() {
   const styleFeature = (feature: MapFeature | undefined): PathOptions => {
     if (!feature || !feature.properties) return {};
 
-    const stateName = feature.properties.name;
-    const stateInfo = apiData.find(
-      (d) =>
-        d.state.toLowerCase().includes(stateName.toLowerCase()) ||
-        stateName.toLowerCase().includes(d.state.toLowerCase())
-    );
+    const stateData = findStateData(feature.properties.name);
 
     return {
-      fillColor: stateInfo ? colorScale(stateInfo.value) : "#E5E7EB",
+      fillColor: stateData ? colorScale(stateData.value) : "#E5E7EB",
       weight: 1,
       opacity: 1,
       color: "white",
@@ -101,20 +118,19 @@ export default function InegiMap() {
 
   // --- TOOLTIPS Y EVENTOS CORREGIDOS ---
   const onEachFeature = (feature: MapFeature, layer: Layer) => {
-    const stateName = feature.properties.name;
-    const stateInfo = apiData.find(
-      (d) =>
-        d.state.toLowerCase().includes(stateName.toLowerCase()) ||
-        stateName.toLowerCase().includes(d.state.toLowerCase())
-    );
+    const originalName = feature.properties.name;
+    const stateData = findStateData(originalName);
 
-    const valueText = stateInfo ? `${stateInfo.value}%` : "No data";
+    // Usamos el nombre corregido para el título del popup
+    const displayName = STATE_ALIASES[originalName] || originalName;
+    const valueText = stateData ? `${stateData.value}%` : "No data";
 
     layer.bindPopup(`
       <div class="text-center">
-        <strong class="text-lg">${stateName}</strong><br/>
+        <strong class="text-lg">${displayName}</strong><br/>
         <span class="text-gray-600">${
-          povertyType === "extreme" ? "Extreme Poverty" : "Total Poverty"
+          povertyType === "extrema" ? "Extreme Poverty" : 
+          povertyType === "moderada" ? "Moderate Poverty" : "Total Poverty"
         }:</span>
         <br/><span class="text-xl font-bold text-orange-600">${valueText}</span>
       </div>
