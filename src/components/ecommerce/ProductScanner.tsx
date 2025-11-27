@@ -4,7 +4,7 @@ import Image from "next/image";
 import { BoxIcon } from "@/icons"; // Usa tus iconos
 
 // Tipos de datos
-interface Product {
+export interface Product {
   title: string;
   price: number;
   image: string;
@@ -20,7 +20,7 @@ export interface TickerData {
   saving: number;
 }
 
-interface SearchResponse {
+export interface SearchResponse {
   results: {
     [key: string]: Product[]; // Ej: "Walmart": [product, product...]
   };
@@ -29,7 +29,7 @@ interface SearchResponse {
 
 // Tipamos las Props del componente
 interface ProductScannerProps {
-  onSearchComplete: (ticker: TickerData | null) => void;
+  onSearchComplete: (data: SearchResponse | null) => void;
 }
 
 export default function ProductScanner({ onSearchComplete }: ProductScannerProps) {
@@ -52,7 +52,7 @@ export default function ProductScanner({ onSearchComplete }: ProductScannerProps
       setData(result);
       // Le mandamos los datos del ticker al componente padre (page.tsx)
       if (result.ticker && !Array.isArray(result.ticker)) {
-        onSearchComplete(result.ticker);
+        onSearchComplete(result);
       } else {
         onSearchComplete(null);
       }
