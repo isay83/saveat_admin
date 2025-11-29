@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from "react";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import SocialTrendsChart from "@/components/charts/r-charts/SocialTrendsChart";
-import SocialInsightsCards from "@/components/charts/r-charts/SocialInsightsCards"; // El nuevo componente
+import SocialInsightsCards from "@/components/charts/r-charts/SocialInsightsCards";
+import SurveyChart from "@/components/charts/r-charts/SurveyChart";
+import TrendingTable from "@/components/charts/r-charts/TrendingTable";
 
 // Tipos de datos completos
 interface FullSocialData {
@@ -57,6 +59,10 @@ export default function SocialMediaPage() {
             loading={loading} 
         />
 
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <SurveyChart />
+        <TrendingTable />
       </div>
     </div>
   );
