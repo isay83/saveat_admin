@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ArrowDownIcon, CheckCircleIcon } from "@/icons"; // Tus iconos
+import { CheckCircleIcon } from "@/icons"; // Tus iconos
 import apiService from "@/lib/apiService"; // Para actualizar en Node.js
 import Alert from "@/components/ui/alert/Alert";
 
@@ -91,8 +91,9 @@ export default function SmartPriceAlert({ localProducts, competitorProducts, onP
       
       {/* Sección Izquierda: La Alerta */}
       <div className="flex items-center gap-4">
-        <div className="p-3 bg-white dark:bg-gray-800 rounded-full text-red-500 shadow-sm animate-pulse">
-            <ArrowDownIcon className="w-6 h-6" />
+        <div className="p-3 bg-white dark:bg-gray-800 text-xl rounded-full text-red-500 shadow-sm animate-pulse">
+            {/* <ArrowDownIcon className="w-6 h-6" /> */}
+            ↓
         </div>
         <div>
             <h4 className="font-bold text-red-700 dark:text-red-400 text-lg">
