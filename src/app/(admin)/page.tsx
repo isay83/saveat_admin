@@ -18,19 +18,19 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg p-6 hover:shadow-lg dark:hover:shadow-xl transition">
-            <div className="text-4xl mb-2"><BoxIcon/></div>
+            <div className="text-4xl mb-2 dark:text-gray-400"><BoxIcon/></div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Inventory</h2>
             <p className="text-gray-600 dark:text-gray-400">Manage your products and stock</p>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg p-6 hover:shadow-lg dark:hover:shadow-xl transition">
-            <div className="text-4xl mb-2"><GroupIcon/></div>
+            <div className="text-4xl mb-2 dark:text-gray-400"><GroupIcon/></div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Beneficiaries</h2>
             <p className="text-gray-600 dark:text-gray-400">Manage registered beneficiaries</p>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg p-6 hover:shadow-lg dark:hover:shadow-xl transition">
-            <div className="text-4xl mb-2"><PieChartIcon/></div>
+            <div className="text-4xl mb-2 dark:text-gray-400"><PieChartIcon/></div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Reports</h2>
             <p className="text-gray-600 dark:text-gray-400">View statistics and data</p>
           </div>
